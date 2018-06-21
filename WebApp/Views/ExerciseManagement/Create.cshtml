@@ -1,0 +1,125 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model WebApp.ViewModels.CreateExerciseViewModel;
+@{
+    ViewBag.Title = "Add Task";
+}
+<link rel="stylesheet" href="~/css/codemirror.css" />
+<script src="~/js/codemirror.js"></script>
+<script src="~/js/matchbrackets.js"></script>
+<script src="~/js/continuecomment.js"></script>
+<script src="~/js/clike.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<link rel="stylesheet" href="~/css/site.css" />
+
+<form asp-action="Create" asp-controller="ExerciseManagement" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+
+        <label class="control-label">@SharedLocalizer["CourseName"] *</label>
+        <select asp-for="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
+        <label class="control-label">@SharedLocalizer["TaskName"] *</label>
+        <input asp-for="TaskName" type="text" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label">@SharedLocalizer["Task"]:</label>
+        <textarea asp-for="TaskTextField" id="MCE"></textarea>
+    </div>
+    <div>
+        <button type="button" class="btn btn-success" id="runCode">►@SharedLocalizer["Run"]</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label">@SharedLocalizer["BaseCode"]:</label>
+            <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+
+        <div>
+            <label class="control-label">@SharedLocalizer["TestCasesCode"]:</label>
+            <textarea asp-for="TestCases" id="testCasesCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+    </div>
+    <div>
+        <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">@SharedLocalizer["Add"]</button>
+    </div>
+</form>
+
+
+<br />
+<h6>@SharedLocalizer["Required"]</h6>
+@section Scripts{
+    <script>
+
+        tinymce.init({
+            selector: '#MCE',
+            plugins: [
+                'advlist autolink list link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools image'
+            ],
+            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar2: 'print preview media | forecolor backcolor emotions | code',
+            image_title: true,
+            automatic_uploads: true,
+            file_picker_types: 'image',
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            }
+        });
+
+
+        window.onload = function () {
+            var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+                mode: "text/x-csrc",
+                theme: "default",
+                lineNumbers: true
+            });
+            var editableTestCasesCodeMirror = CodeMirror.fromTextArea(document.getElementById('testCasesCodeField'), {
+                mode: "text/x-csrc",
+                theme: "default",
+                lineNumbers: true
+            });
+
+            $('#runCode').click(
+                function () {
+                    $('#result').html('');
+                    var code = new Object();
+                    code.TestRunCode = editableTestCasesCodeMirror.getValue();
+                    code.TestRunCode += editableCodeMirror.getValue();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Code/TestRun",
+                        data: code,
+                        success: function (data) {
+                            $("#result").html(data);
+                        }
+                    });
+                }
+            );
+        };
+    </script>}

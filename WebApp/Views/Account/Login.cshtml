@@ -1,0 +1,48 @@
+﻿@model WebApp.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<style>
+    li {
+        color: black;
+    }
+</style>
+<h2>
+    @SharedLocalizer["Login"]
+</h2>
+<form method="post" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="Email">
+            @SharedLocalizer["Email"]
+        </label><br />
+
+        <input id="emailLogin" asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Password">
+            @SharedLocalizer["Password"]
+        </label><br />
+
+        <input id="passwordLogin" asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="RememberMe">
+            @SharedLocalizer["RememberMe?"]
+        </label>
+
+        <input id="RememberMe" asp-for="RememberMe" />
+    </div>
+    <div>
+        <input type="submit" id="submitLogin" value="@SharedLocalizer["SignIn"]" />
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/js/tokenAuth.js"></script>
+}

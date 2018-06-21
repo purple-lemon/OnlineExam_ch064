@@ -1,0 +1,16 @@
+﻿@model WebApp.ViewModels.CoursesViewModels.ChangeCourseOwnerViewModel
+@{
+    ViewData["Title"] = "ChangeOwner";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<h2>@SharedLocalizer["CourseName"] @Model.CourseName</h2>
+<p>@SharedLocalizer["CurrentOwner"]: @Model.CurrentOwner</p>
+<form asp-action="ChangeOwner" asp-controller="CourseManagement" method="post">
+    <select asp-for="ResultTeacherId"
+            asp-items="@(new SelectList(Model.TeacherList, "Id", "Email"))">
+    </select>
+    <input type="hidden" asp-for="CourseId" value="@Model.CourseId"/>
+    <input type="submit" value="Ok" class="btn btn-default"/>
+</form>

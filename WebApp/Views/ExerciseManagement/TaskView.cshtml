@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model WebApp.ViewModels.GetExerciseViewModel;
+@{
+    ViewBag.Title = "Task View";
+}
+
+
+
+
+<form asp-action="TaskView" asp-controller="ExerciseManagement">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" id="TaskId" value="@Model.Id" />
+    </div>
+    <div class="form-group">
+        <input type="text" asp-for="TaskName" class="form-control" readonly style="background-color: white;" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">@SharedLocalizer["Task"]:</label>
+        <textarea asp-for="TaskTextField" id="MCE"></textarea>
+    </div>
+    <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
+    <textarea id="taskBaseCodeField" asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly> </textarea>
+    <br />
+    <div class="col-md-1">
+        <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
+
+    </div>
+
+</form>
+<div class="col-md-1"></div>
+<div class="col-md-2" style="margin-left: 10px;">
+    <form asp-controller="Code" asp-action="Index">
+        <input type="hidden" name="UserId" value="@User.Identity.Name" />
+        <input type="hidden" name="ExerciseId" value="@Model.Id" />
+        <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
+    </form>
+
+</div>
+<div style="clear: both;">
+    <br />
+</div>
+<div>
+    <button id="tggl" class="btn btn-default">@SharedLocalizer["Show/HideComments"]</button>
+
+</div>
+
+<div id="comments">
+    <br />
+    @foreach (var comment in Model.CommentList)
+    {
+        <div class="panel panel-info">
+
+            <div class="panel-heading">
+                @comment.UserName <span style="float: right;" class="rating" data-default-rating=@comment.Rating disabled></span>
+            </div>
+            <div class="panel-body">
+                @comment.CommentText
+            </div>
+            <div class="panel-footer">
+                @comment.CreationDateTime
+            </div>
+        </div>
+    }
+</div>
+
+
+<div>
+    <br />
+    <div class="panel panel-warning" position: unset;">
+        <div class="panel-heading ">
+            <label class="control-label ">@SharedLocalizer["RateField"]</label>
+            <span class="rating" id="rateField" data-default-rating="-1"></span>
+        </div>
+        <div class="panel-body ">
+            <label class="control-label">@SharedLocalizer["ComText"]</label>
+            <textarea style="width: 95%; margin-left: 20px;" id="textField" class="form-control"></textarea>
+        </div>
+        <div class="panel-footer">
+            <button id="buttn" class="btn btn-default">@SharedLocalizer["Comment"]</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+
+    <script>
+
+        $('#buttn').click(
+            function () {
+
+                var comment = new Object();
+                comment.ExerciseId = $('#TaskId').val();
+                comment.Rating = qq;
+                comment.CommentText = $('#textField').val();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Comment/Create",
+                    data: comment
+                });
+            });
+
+        tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false });
+
+        var qq = 0;
+        var ratings = document.getElementsByClassName('rating');
+
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {
+                console.log('Rating: ' + e.detail);
+                qq = e.detail;
+            });
+        }
+
+        $(document).ready(function () {
+            $('#tggl').click(function () {
+                $('#comments').toggle(900);
+            });
+        });
+
+        var editableCodeMirror = null;
+        window.onload = function () {
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+                mode: "text/x-csrc",
+                theme: "default",
+                lineNumbers: true
+            });
+
+        };
+
+    </script>
+}

@@ -1,0 +1,70 @@
+﻿@model WebApp.ViewModels.ChangeUserNameViewModel
+
+@{
+    ViewData["Title"] = "Change User Name";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<h2>@SharedLocalizer["ChangeUsername"]</h2>
+
+<h4>@SharedLocalizer["YourName"] <b> @User.Identity.Name </b> </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        
+        <form id="app2" asp-action="ChangeUserName">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <p v-if="errors.length">
+            <b>@SharedLocalizer["FixError"]:</b>
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
+        </p>
+        <div class="form-group">
+            <label for="NewUserName">@SharedLocalizer["NewUserName"]</label>
+
+            <input asp-for="NewUserName" type="text" class="form-control"
+                   name="NewUserName"  id="NewUserName"
+                   v-model="NewUserName" placeholder="NewUserName ">
+            <span asp-validation-for="NewUserName"></span>
+        </div>
+        <div class="form-group">
+            <label for="Password">@SharedLocalizer["Password"]</label>
+
+            <input asp-for="Password" class="form-control"
+                   id="Password" name="Password"
+                   v-model="Password" placeholder="Password">
+            <span asp-validation-for="Password"></span>
+        </div>
+        <input v-on:click="save" type="submit" value="@SharedLocalizer["Save"]">
+            </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                errors: [],
+                NewUserName: "",
+                Password: "",        
+
+            },
+            methods:
+            {
+                save: function(e) {
+                    this.errors = [];                  
+                    if (this.NewUserName === "") this.errors.push("@SharedLocalizer["FillUserName"]");
+                    if (!this.Password) this.errors.push("@SharedLocalizer["FillPassword"]");                                   
+                    if (!this.errors.length) return true;
+                    e.preventDefault();
+                }
+
+                    
+            }
+        });
+    </script>
+}

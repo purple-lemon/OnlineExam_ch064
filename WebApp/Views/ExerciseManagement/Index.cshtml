@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model IEnumerable<Model.DTO.ExerciseDTO>
+@{
+    ViewBag.Title = "Task List";
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-default">@SharedLocalizer["AddTask"]</a></h4>
+}
+<table class="table">
+    <tr>
+                @if (User.IsInRole("Teacher"))
+                {
+                    <td>@SharedLocalizer["TaskName"]</td>
+                    <td>@SharedLocalizer["CreateDate"]</td>
+                    <td>@SharedLocalizer["UpdateDate"]</td>
+                    <td>@SharedLocalizer["CourseName"]</td>
+                    <td></td>
+                }
+        </tr>
+    @foreach (var task in Model)
+    {
+        @if (!task.IsDeleted)
+        {
+            <tr>
+                <td>
+                    <a id="bluhighl" asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                
+                @if (User.IsInRole("Teacher"))
+                {
+                    
+                    <td>@task.CreateDateTime.ToString("dd/MM/yyyy")</td>
+                    <td>@task.UpdateDateTime.ToString("dd/MM/yyyy")</td>
+                }
+                    <td>@task.Course </td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+    {    
+                        
+                <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post" class=" col-md-7">
+                    <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-default" >@SharedLocalizer["Change"]</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        @SharedLocalizer["Delete"]
+                    </button>
+                </form>
+                <button  onclick='location.href = "@Url.Action("ExerciseSolutionsIndex", "ExerciseManagement", new { id = @task.Id})"' class="btn btn-sm btn-default col-md-3" >   @SharedLocalizer["Solutions"]</button>
+}
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr style="background-color: rgba(126, 126, 126, 0.65)">
+                <td style="color: #586272;">@task.Course</td>
+                <td style="color: #738db5;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
+                            <button type="submit" class="btn btn-sm btn-warning">
+                                @SharedLocalizer["Recover"] 
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>

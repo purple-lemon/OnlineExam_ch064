@@ -1,0 +1,187 @@
+﻿@model WebApp.ViewModels.IndexViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    a:hover {
+        cursor: pointer;
+    }
+
+    .Inbox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #dedede;
+        text-align: center;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .Outbox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #dedede;
+        text-align: center;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    #InBoxMEssages {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #OutBoxMEssages {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .mess {
+        margin-top: 20px;
+        min-height: 500px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .email-btn {
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        margin-left: 15px;
+    }
+
+    .mess-head {
+        background: rgba(188, 246, 161, 0.58)
+    }
+
+    .out-head {
+        background: rgb(76, 255, 0);
+        border: 1px solid #dedede;
+        border-radius: 5px;
+    }
+
+    .notif {
+        background: #ff0000;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        right: 65px;
+        text-align: center;
+        top: 2px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 1px 1px 3px #000;
+        -webkit-box-shadow: 1px 1px 3px #000;
+        box-shadow: 1px 1px 3px #000;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary email-btn" asp-controller="EmailMessages" asp-action="SendEmail">@SharedLocalizer["SendMessage"]</a>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-3">
+            @if (Model.InBoxMessages.Where(e => e.IsNew==true).Count()!= 0)
+            {
+                <p class="notif">@Model.InBoxMessages.Where(e => e.IsNew==true).Count()</p>
+            }
+            else
+            {
+                
+            }
+            <a href='@Url.Action("Open", "EmailMessages", new { flag = true }, null)'>
+                <div class="Inbox">
+                    <br />
+                    <br />
+                    @SharedLocalizer["Inbox"]
+                </div>
+            </a>
+            <a href='@Url.Action("Open", "EmailMessages", new { flag = false }, null)'>
+                <div class="Outbox">
+                    <br />
+                    <br />
+                    @SharedLocalizer["Outbox"]
+                </div>
+            </a>
+
+        </div>
+        <div class="col-lg-8 mess">
+            @if (Model.InBoxMessages.Select(e => e.IsInBox).FirstOrDefault())
+            {
+                <div data-flag="@Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault()" id="InBoxMEssages">
+                    <h3 class="out-head">@SharedLocalizer["Inbox"]</h3>
+                    @foreach (var mes in Model.InBoxMessages)
+                    {
+                        if (mes.FromEmail != null)
+                        {
+                            <p class="mess-head">@mes.FromEmail @mes.Date</p>
+
+                            <p>@mes.InboxText</p>
+                            <hr />
+                        }
+                    }
+                    @if (Model.InBoxMessagesPageViewModel.HasPreviousPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber - 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                        </a>
+                    }
+                    @if (Model.InBoxMessagesPageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber + 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    }
+                </div>
+            }
+            @if (!Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault())
+            {
+                <div data-flag="@Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault()" id="OutBoxMEssages">
+                    <h3 class="out-head">@SharedLocalizer["Outbox"]</h3>
+                    @foreach (var mes in Model.OutBoxMessages)
+                    {
+                        if (mes.ToEmail != null)
+                        {
+                            <p class="mess-head">@mes.ToEmail @mes.Date</p>
+                            <p>@mes.OutboxText</p>
+                            <hr />
+                        }
+                    }
+                    @if (Model.OutBoxMessagesPageViewModel.HasPreviousPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber - 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                        </a>
+                    }
+                    @if (Model.OutBoxMessagesPageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber + 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    
+}

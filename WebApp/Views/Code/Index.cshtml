@@ -1,0 +1,200 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model WebApp.ViewModels.CodeStartViewModel;
+@using Model.Entity;
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+
+
+@if (Model.UserCodeDTO.CodeStatus == CodeStatus.Appreciated || Model.UserCodeDTO.CodeStatus == CodeStatus.Done)
+{
+    <div class="row">
+        <div class="col-md-12 col-lg-1"></div>
+        @if (Model.UserCodeDTO.Mark == 0)
+        {
+            <div class="col-md-12" style="background-color: #fff8c4; height: 70px;">
+                <h5>@SharedLocalizer["OnReview"]</h5>
+            </div>
+        }
+        else
+        {
+            if (Model.UserCodeDTO.Mark > 50)
+            {
+                <div class="col-md-12" style="background-color: #d6fbcd; height: 205px;">
+                    <h5>@SharedLocalizer["Congrats"] @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
+                    {
+                        <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(0,0,0,0.5); background-color: #c48787; height: 205px; ">
+                    <h5>@SharedLocalizer["NotEnough"] @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
+                    {
+                    <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
+                    }
+                </div>
+            }
+
+        }
+    </div>
+}
+<div style="clear: both;">
+    <br />
+</div>
+<div class="col-md-12">
+    <label class="control-label" style="font-size: 20px;" id="task">@SharedLocalizer["Task"]:</label>
+  <div id="ECMDIV">  <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea> </div>
+</div>
+<div style="clear: both;">
+    <br />
+</div>
+
+<div class="row block2">
+
+    <div>
+        <div class="col-md-12">
+
+            <br />
+            <div class="row">
+                <div class="col-md-9">
+                    <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
+
+
+                </div>
+                <div class="col-md-3" style="height: 650px">
+                    <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
+                    <br />
+                    <br />
+                    <input type="hidden" id="stat" asp-for="@Model.UserCodeDTO.CodeStatus">
+
+                    <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
+
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
+
+                    <button type="button" id="done" class="btn btn-danger" onclick='location.href = "@Url.Action("Index", "Home")"' >@SharedLocalizer["Done"]</button>
+
+                </div>
+
+            </div>
+         
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+            $('#codeText').html('@Model.UserCodeDTO.CodeText');
+            tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false }); 
+            tinymce.init({ selector: '#ECM', readonly: 1, menubar: false, toolbar: false }); 
+        });
+
+        var editableCodeMirror = null;
+        window.onload = function () {
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
+                mode: "htmlmixed",
+                theme: "default",
+                lineNumbers: true
+            });
+
+            $(document).ready(function () {
+                $('#task').click(function () {
+                    $('#ECMDIV').toggle(900);
+                });
+            });
+
+            $(document).ready(function () {
+                $('#task').hover(function () {
+                    $(this).css("cursor","pointer");
+                }, function () {
+                    $(this).css("cursor", "default");
+                });
+            });
+          
+            editableCodeMirror.on('change', function () {             
+                editableCodeMirror.userCodeWasChanged = true;
+            });
+
+            setInterval(function () { 
+                if (editableCodeMirror.userCodeWasChanged) {
+                    editableCodeMirror.userCodeWasChanged = false;
+                    $('#result').html('');
+                    var userCode = new Object();
+                    userCode.CodeText = editableCodeMirror.getValue();
+                    userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Code/ExecuteOnFlyCode",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        data: userCode,
+                        cache: false,
+                        success: function (data) {
+                            $("#result").html(data);
+                        }
+                    });
+                }
+            },3000);
+      
+            editableCodeMirror.setOption("mode", "text/x-csrc");      
+        };
+
+        $('#done').click(
+            function() {
+
+                var model = new Object();
+                model.CodeText = editableCodeMirror.getValue();
+                model.UserId = ('@Model.UserCodeDTO.UserId');
+                model.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/SetCodeStatus",
+                    data: model
+                });
+            });
+
+
+        $('#reloadButton').click(function() {
+
+            editableCodeMirror.setValue('@Model.UserCodeDTO.CodeText');
+        });
+
+        $('#executeButton').click(
+            function() {
+                $('#result').html('');
+                console.log("start");
+
+                var userCode = new Object();
+                userCode.CodeText = editableCodeMirror.getValue();
+                userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
+                userCode.UserId = ('@Model.UserCodeDTO.UserId');
+                userCode.CodeStatus = ('@Model.UserCodeDTO.CodeStatus');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/GetCode",
+                    data: userCode,
+                    success: function(data) {
+                        $("#result").html(data);
+                    }
+                });
+
+            }
+        );
+
+
+    </script>
+}
+

@@ -1,0 +1,112 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: white;
+    
+}
+
+.deff {
+    font-size: 13px; font-family: 'Lato', Arial, sans-serif;
+    line-height: 30px; color: black;text-transform: uppercase; letter-spacing: 1px;
+    font-weight: bold;display: block;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+.navbar{
+    background-color:#004577;
+    border-bottom:1px solid grey;
+}
+li{
+    color:red;
+}
+
+textarea.courses_description {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: red;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    color: red;
+}
+
+
+select.input-validation-error {
+    color: red;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: red;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+.bluehighl {
+    color: #0800ff;
+}
+
+#editor-container {
+    height: 375px;
+}
+#ChPaswBut1 {
+  width:171px;
+
+  height:30px;
+}
+#ChPaswBut2 {
+    width: 171px;
+    height: 30px;
+}
+#ChPaswBut3 {
+    width: 171px;
+    height: 30px;
+}

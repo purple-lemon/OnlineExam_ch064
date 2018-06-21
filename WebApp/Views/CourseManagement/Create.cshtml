@@ -1,0 +1,23 @@
+﻿@model Model.DTO.CourseDTO
+@{
+    ViewBag.Title = "Add course";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<form asp-action="Create" asp-controller="CourseManagement">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+
+        <label asp-for="Name" class="control-label">@SharedLocalizer["CourseName"]*</label>
+        <input type="text" asp-for="Name" class="form-control" required />
+
+        <label asp-for="Description" class="control-label">@SharedLocalizer["CourseDescription"]</label>
+        <textarea asp-for="Description" class="form-control courses_description"></textarea>
+
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ok" class="btn btn-default" />
+    </div>
+</form>
+<h6>@SharedLocalizer["Required"]</h6>

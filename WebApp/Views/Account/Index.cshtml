@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<style>
+    li {
+        color: black;
+    }
+    
+</style>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>@User.Identity.Name</p>
+
+        <form method="post" asp-controller="Account" asp-action="LogOff">
+            <input type="submit" id="logOut" value="@SharedLocalizer["SignOut"]" />
+
+        </form>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login">@SharedLocalizer["Enter"]</a>
+        <a asp-controller="Account" asp-action="Register">@SharedLocalizer["Registration"]</a>
+
+    }

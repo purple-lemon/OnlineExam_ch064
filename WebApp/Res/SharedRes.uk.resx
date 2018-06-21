@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Дія</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Додати</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>Додати завдання</value>
+  </data>
+  <data name="Addcourse" xml:space="preserve">
+    <value>Додати курс</value>
+  </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Адмін панель</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="ChangeFor" xml:space="preserve">
+    <value>Зміна пароля для </value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Підтвердити новий пароль</value>
+  </data>
+  <data name="CourseName" xml:space="preserve">
+    <value>Назва курсу</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Дата створення</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Changecourseowner" xml:space="preserve">
+    <value>Змінити власника курсу</value>
+  </data>
+  <data name="CourseDescription" xml:space="preserve">
+    <value>Опис курсу</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Курси</value>
+  </data>
+  <data name="Editcourse" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Електронна адресса</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Логін</value>
+  </data>
+  <data name="Mycourses" xml:space="preserve">
+    <value>Мої курси</value>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>Мій профіль</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новий пароль</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Добре</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Старий пароль</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Підтвердіть пароль</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Відновити</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="RememberMe?" xml:space="preserve">
+    <value>Запам`ятати?</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Поля з * є обов'язковими</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Вихід</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Завдання</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Назва завдання</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Завдання</value>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Дата оновлення</value>
+  </data>
+  <data name="SoftServe" xml:space="preserve">
+    <value>SoftServe</value>
+  </data>
+  <data name="HomePageContent" xml:space="preserve">
+    <value>Тут буде контент головної сторінки</value>
+  </data>
+  <data name="AddChange" xml:space="preserve">
+    <value>Додати / Редагувати</value>
+  </data>
+  <data name="AddNewRole" xml:space="preserve">
+    <value>Додати нову роль в список</value>
+  </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Редагувати роль юзеру</value>
+  </data>
+  <data name="CurRole" xml:space="preserve">
+    <value>Поточна роль</value>
+  </data>
+  <data name="NewRole" xml:space="preserve">
+    <value>Нова роль</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Права доступа</value>
+  </data>
+  <data name="RolesLst" xml:space="preserve">
+    <value>Список ролей</value>
+  </data>
+  <data name="UsersLst" xml:space="preserve">
+    <value>Назад до юзерів</value>
+  </data>
+  <data name="ChangeUsername" xml:space="preserve">
+    <value>Змінити ім'я користувача</value>
+  </data>
+  <data name="ChangeEmail" xml:space="preserve">
+    <value>Змінити електронну пошту</value>
+  </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>Нова електронна пошта</value>
+  </data>
+  <data name="NewUserName" xml:space="preserve">
+    <value>Нове ім'я користувача</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value> Ваша електронна пошта :</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ваше ім'я :</value>
+  </data>
+  <data name="BaseCode" xml:space="preserve">
+    <value>Стартовий код</value>
+  </data>
+  <data name="CodeHistory" xml:space="preserve">
+    <value>Історія виконання коду</value>
+  </data>
+  <data name="Exercisetitle" xml:space="preserve">
+    <value>Назва завдання</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Виконати</value>
+  </data>
+  <data name="Try" xml:space="preserve">
+    <value>Спробувати</value>
+  </data>
+  <data name="AddTestCase" xml:space="preserve">
+    <value>Додати тест</value>
+  </data>
+  <data name="InputData" xml:space="preserve">
+    <value>Вхідні дані</value>
+  </data>
+  <data name="OutputData" xml:space="preserve">
+    <value>Вихідні дані</value>
+  </data>
+  <data name="TestCasesCode" xml:space="preserve">
+    <value>Код юніт тестів</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="ComText" xml:space="preserve">
+    <value>Текст коментаря</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
+  <data name="RateField" xml:space="preserve">
+    <value>Поле рейтингу</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Користувач</value>
+  </data>
+  <data name="Written" xml:space="preserve">
+    <value>Опубліковано</value>
+  </data>
+  <data name="No-Content" xml:space="preserve">
+    <value>Ваш аккаунт ще не має історії написання коду</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Історія</value>
+  </data>
+  <data name="save-changes" xml:space="preserve">
+    <value>зберегти</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Новини</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Виконати</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>Список користувачів</value>
+  </data>
+  <data name="EditRoles" xml:space="preserve">
+    <value>Редагувати ролі</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Рішення</value>
+  </data>
+  <data name="Congrats" xml:space="preserve">
+    <value>Вітаю! Ваш результат відмінний! Ваша оцінка: </value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Завершити</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Вийти</value>
+  </data>
+  <data name="NotEnough" xml:space="preserve">
+    <value>Вибачте, але ваш результат недостатньо хороший. Ваша оцінка:</value>
+  </data>
+  <data name="OnReview" xml:space="preserve">
+    <value>Ваше рішення наразі переглядається. Очікуйте резульат</value>
+  </data>
+  <data name="TeachersComment" xml:space="preserve">
+    <value>Коментар вчителя</value>
+  </data>
+  <data name="Ratings" xml:space="preserve">
+    <value>Рейтинги</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Пошта</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Контактна інформація</value>
+  </data>
+  <data name="BackToMail" xml:space="preserve">
+    <value>Назад до Пошти</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Зв'яжіться з нами</value>
+  </data>
+  <data name="Favourites" xml:space="preserve">
+    <value>Вподобаний код</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Отримані повідомлення</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Outbox" xml:space="preserve">
+    <value>Відправлені повідомлення</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Відправити повідомлення</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="Your" xml:space="preserve">
+    <value>Ваше</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Відправити</value>
+  </data>
+  <data name="DoesNotmatch" xml:space="preserve">
+    <value>Поля 'Новий парль' і 'Підвердити новий пароль' не співпадають</value>
+  </data>
+  <data name="FillConfNewPassword" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Підвердити новий пароль!'</value>
+  </data>
+  <data name="FillNewPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Новий пароль!'</value>
+  </data>
+  <data name="FillOldPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Старий пароль!'</value>
+  </data>
+  <data name="FixError" xml:space="preserve">
+    <value>Будь ласка виправте ці помилки</value>
+  </data>
+  <data name="8Char" xml:space="preserve">
+    <value>Пароль повинен містити хоча б 8 символів</value>
+  </data>
+  <data name="CorrectEmail" xml:space="preserve">
+    <value>Будь ласка, напишіть правильну електронну адресу</value>
+  </data>
+  <data name="FillNewEmail" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Нова електронна пошта'</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Будь ласка, заповність поле 'Пароль'</value>
+  </data>
+  <data name="FillUserName" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Ім'я користувача'!</value>
+  </data>
+  <data name="LowerCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру нижнього регістру ('a'-'z').</value>
+  </data>
+  <data name="NonAN" xml:space="preserve">
+    <value>Пароль повинен містити хоча б один не алфавітно-цифровий символ</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну цифру</value>
+  </data>
+  <data name="UpperCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру верхнього регістру ('A'-'Z').</value>
+  </data>
+  <data name="DoneTasksNumber" xml:space="preserve">
+    <value>Кількість виконаних завдань</value>
+  </data>
+  <data name="FINISH" xml:space="preserve">
+    <value>ЗАВЕРШИТИ</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Переглянути</value>
+  </data>
+  <data name="SetMark" xml:space="preserve">
+    <value>Оцінити</value>
+  </data>
+  <data name="Solution" xml:space="preserve">
+    <value>Рішення</value>
+  </data>
+  <data name="Solution Review" xml:space="preserve">
+    <value>Огляд рішення</value>
+  </data>
+  <data name="UserRate" xml:space="preserve">
+    <value>Рейтинг користувача</value>
+  </data>
+  <data name="Show/HideComments" xml:space="preserve">
+    <value>Показати/Сховати Коментарі</value>
+  </data>
+  <data name="Create Article" xml:space="preserve">
+    <value>Створити новину</value>
+  </data>
+  <data name="CurrentOwner" xml:space="preserve">
+    <value>Поточний власник</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Сортувати по секціям</value>
+  </data>
+</root>

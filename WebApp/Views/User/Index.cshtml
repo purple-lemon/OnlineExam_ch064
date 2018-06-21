@@ -1,0 +1,40 @@
+﻿@model Model.DTO.UserDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<link href="~/css/site.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-4">
+                <strong> @SharedLocalizer["Email"]</strong>
+            </div>
+            <div class="col-lg-8">
+                <strong>@SharedLocalizer["Action"]</strong>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-4">
+                @Model.Email
+            </div>
+            <div class="col-lg-8">
+
+                <div class="row">
+                    <div class="col-lg-3">
+                        <a class="btn btn-sm btn-default" id="ChPaswBut1" asp-action="ChangePassword" asp-route-id="@Model.Id">@SharedLocalizer["ChangePassword"]</a>
+                        <div></div>
+                        <br />
+                        <a class="btn btn-sm btn-default" id="ChPaswBut2" asp-action="ChangeUserName" asp-route-id="@Model.Id">@SharedLocalizer["ChangeUsername"]</a>
+                        <div></div>
+                        <br />
+
+                        <a class="btn btn-sm btn-default" id="ChPaswBut3" asp-action="ChangeEmail" asp-route-id="@Model.Id">@SharedLocalizer["ChangeEmail"]</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model IEnumerable<Model.DB.User>
+@{
+    ViewBag.Title = "Task List";
+}
+
+
+<table class="table">
+
+
+        <tr>
+            <td>@SharedLocalizer["User"]</td>
+            <td>@SharedLocalizer["UserRate"]</td>
+            <td>@SharedLocalizer["DoneTasksNumber"]</td>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.UserRating</td>
+                <td>@user.DoneTaskNumber</td>
+            </tr>
+        }
+</table>
+

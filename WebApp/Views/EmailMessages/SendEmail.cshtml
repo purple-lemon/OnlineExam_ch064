@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<style>
+    .form-container {
+        padding: 5%;
+        background: #ffffff;
+        max-width: 620px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <a class="btn btn-primary email-btn " asp-controller="EmailMessages" asp-action="Index">@SharedLocalizer["BackToMail"]</a>
+        </div>
+
+
+        <div class="form-container col-lg-9">
+            <br />
+            <form asp-controller="EmailMessages" asp-action="Send" method="post" id="reused_form">
+                <label for="name">@SharedLocalizer["Subject"]:</label>
+                <input id="name" type="text" class="form-control" name="Subject" required maxlength="50">
+
+                <label for="email">@SharedLocalizer["Email"]:</label>
+                <input id="email" class="form-control" type="email" name="Email" required maxlength="70">
+
+                <label for="message">@SharedLocalizer["Message"]:</label>
+                <textarea id="message" class="form-control" name="Message" rows="10" maxlength="6000" required></textarea>
+
+                <br />
+                <input class="btn btn-primary btn-send-email" type="submit" value="@SharedLocalizer["Send"]" />
+            </form>
+        </div>
+    </div>
+</div>
+<br />

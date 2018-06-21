@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Model.DTO.ExerciseDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<link rel="stylesheet" href="~/css/StarRating.css" />
+<form asp-action="ShowExercise" asp-controller="CourseManagement">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <table class="table">
+        <tr>
+            <th> @SharedLocalizer["TaskName"] </th>
+        </tr>
+
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.TaskName</td>
+
+                <td>
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+                           
+                            <a class="btn btn-sm btn-default" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>                               
+                        }
+                    }
+
+                </td>
+                
+                <td><span class="rating" data-default-rating="@p.Rating" disabled></span></td>
+                
+            </tr>
+        }
+
+    </table>
+
+</form>
+@section Scripts{ 
+    <script src="~/js/StarRating.js"></script>
+
+    <script>
+        var ratings = document.getElementsByClassName('rating');
+
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {            
+            });
+        }
+    </script>
+}
+

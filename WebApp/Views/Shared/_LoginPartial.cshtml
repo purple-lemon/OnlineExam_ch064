@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <li style="float: right">@Html.ActionLink(@User.Identity.Name, "Index", "User")</li>
+
+    <li style="float: right">
+        <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+            <button type="submit" style="" class="btn btn-link navbar-btn navbar-link deff ">
+                @SharedLocalizer["SignOut"]
+        </button>
+    </form>
+</li>
+}
+else
+{
+<li style="float: right"><a asp-controller="Account" asp-action="Register">@SharedLocalizer["SignUp"]</a></li>
+<li style="float: right"><a asp-controller="Account" asp-action="Login">@SharedLocalizer["SignIn"]</a></li>
+}
+<li style="float: right">
+    @await Html.PartialAsync("_SelectLanguagePartial")
+</li>

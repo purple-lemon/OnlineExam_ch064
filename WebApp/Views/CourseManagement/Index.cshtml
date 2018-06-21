@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Model.DTO.CourseDTO>
+@{
+    ViewBag.Title = "Course List";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@if (User.IsInRole("Teacher"))
+{
+    <a asp-action="Create" class="btn btn-sm btn-default">@SharedLocalizer["Addcourse"]</a>
+    <a asp-action="ViewCourses" class="btn btn-sm btn-default">@SharedLocalizer["Mycourses"]</a>
+}
+
+
+<table class="table">
+
+    <tr>
+        <th>@SharedLocalizer["CourseName"]</th>
+        <th>@SharedLocalizer["CreateDate"]</th>
+    </tr>
+
+
+    @foreach (var course in Model)
+    {
+        @if (!User.IsInRole("Student") || course.IsActive)
+        {
+            <tr>
+                <td> <a class="bluehighl" asp-action="ShowExercise" asp-route-id="@course.Id">@course.Name</a></td>
+                <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@course.Id" method="post">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
+                            <a class="btn btn-sm btn-default" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
+                            if (course.IsActive)
+                            {
+                                <a class="btn btn-sm btn-danger" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-primary" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
+                            }
+                        }
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+</table>

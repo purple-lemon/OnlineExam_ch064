@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20180413145005_upd.cs" />
+    <Compile Remove="Migrations\20180414122314_init.cs" />
+    <Compile Remove="Migrations\20180414132323_init.cs" />
+    <Compile Remove="Migrations\20180414164835_init.cs" />
+    <Compile Remove="Migrations\20180416111115_newMigration.cs" />
+    <Compile Remove="Migrations\20180416122824_initial.cs" />
+    <Compile Remove="Migrations\20180416123708_initial.cs" />
+    <Compile Remove="Migrations\20180421181557_init.cs" />
+    <Compile Remove="Migrations\20180423094338_MyMigration.cs" />
+    <Compile Remove="Migrations\20180425140712_Initial.cs" />
+    <Compile Remove="Migrations\20180425141941_initial.cs" />
+    <Compile Remove="Migrations\20180425142259_Initial.cs" />
+    <Compile Remove="Migrations\20180426143327_myMigration.cs" />
+    <Compile Remove="Migrations\20180427093443_codeHistory.cs" />
+    <Compile Remove="Migrations\20180427142108_TestCases.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+</Project>

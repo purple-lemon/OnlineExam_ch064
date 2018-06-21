@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model WebApp.ViewModels.UserCodeReview.UserCodeReviewViewModel;
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<style type="text/css">
+</style>
+
+<form asp-action="CodeMarking" asp-controller="Code">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.UserCodeDTO.ExerciseId" />
+    <input type="hidden" asp-for="@Model.UserCodeDTO.Id" />
+    <div class="row block2">
+
+        <div>
+            <div class="col-md-12">
+                <div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
+                    <div class="col-md-12">
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseName</div>
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.ExerciseTask</div>
+                    </div>
+                </div>
+                <br />
+                <div class="row" style="height: 650px">
+                    <div class="col-md-9">
+                        <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; " readonly="readonly"></textarea>
+
+
+                    </div>
+                    <div class="col-md-3" style="height: 650px">
+                        <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
+                        <br />
+                        <br />
+                        <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="clear: both;">
+        <br />
+    </div>
+
+    <div class="col-md-11">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="padding-left: 100px">
+            <div class="panel panel-warning" style="width: 100%" ; position: unset;">
+                <div class="panel-heading">
+                    <label class="control-label">@SharedLocalizer["SolutionReview"]</label>
+                    <span class="rating" id="rateField" data-default-rating="-1"></span>
+                </div>
+                <input asp-for="UserCodeDTO.UserId" type="hidden">
+                <div class="panel-body">
+                    <label class="control-label">@SharedLocalizer["ComText"]</label>
+                    <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; margin-left: 20px;" id="MCE" class="form-control"></textarea>
+                    <br />
+                    <label class="control-label">@SharedLocalizer["SetMark"]</label>
+                    <input asp-for="@Model.UserCodeDTO.Mark" type="text" />
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-warning">@SharedLocalizer["FINISH"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+    @section Scripts {
+
+        <script>
+        $(document).ready(function() {
+            $('#codeText').html('@Model.UserCodeDTO.CodeText');
+            tinymce.init({ selector: '#MCE', menubar: false});
+            });
+
+
+        var editableCodeMirror = null;
+        window.onload = function () {
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
+                mode: "htmlmixed",
+                readOnly: "true",
+                theme: "default",
+                lineNumbers: true
+            });
+            editableCodeMirror.setOption("mode", "text/x-csrc");
+        };
+
+
+
+        $('#reloadButton').click(function () {
+
+            editableCodeMirror.setValue('@Model.UserCodeDTO.CodeText');
+            });
+
+            $('#executeButton').click(
+            function () {
+            $('#result').html('');
+            console.log("start");
+
+            var userCode = new Object();
+            userCode.CodeText = editableCodeMirror.getValue();
+            userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
+            userCode.UserId = ('@Model.UserCodeDTO.UserId');
+
+            $.ajax({
+            type: "POST",
+            url: "/Code/GetCode",
+            data: userCode,
+            success: function(data) {
+            $("#result").html(data);
+            }
+            });
+
+            }
+            );
+
+        </script>
+    }

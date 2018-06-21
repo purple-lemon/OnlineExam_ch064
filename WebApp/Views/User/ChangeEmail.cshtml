@@ -1,0 +1,82 @@
+﻿@model WebApp.ViewModels.ChangeEmailViewModel
+
+@{
+    ViewData["Title"] = "Change Email";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<h2>@SharedLocalizer["ChangeEmail"]</h2>
+
+<h4>@SharedLocalizer["YourEmail"] @Model.OldEmail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="changeEmail" asp-action="ChangeEmail">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p v-if="errors.length">
+                <b>@SharedLocalizer["FixError"]:</b>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </p>
+            <div class="form-group">
+                <label for="NewEmail">@SharedLocalizer["NewEmail"]</label>
+
+                <input asp-for="NewEmail" type="email" class="form-control"
+                       name="NewEmail" id="NewEmail"
+                       v-model="NewEmail" placeholder="NewEmail ">
+                <span asp-validation-for="NewEmail"></span>
+            </div>
+            <div class="form-group">
+                <label for="Password">@SharedLocalizer["Password"]</label>
+
+                <input asp-for="Password" class="form-control"
+                       id="Password" name="Password"
+                       v-model="Password" placeholder="Password">
+                <span asp-validation-for="Password"></span>
+            </div>
+            <input v-on:click="save" type="submit" value="@SharedLocalizer["Save"]">
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        var changeEmail = new Vue({
+            el: '#changeEmail',
+            data: {
+                errors: [],
+                NewEmail: "",
+                Password: "",
+
+            },
+            methods:
+            {
+                save: function(e) {
+                    this.errors = [];
+                    if (this.NewEmail === "") this.errors.push("@SharedLocalizer["FillNewEmail"]");
+
+                    else if (!this.validEmail(this.NewEmail)) {
+            this.errors.push("@SharedLocalizer["CorrectEmail"]");
+                    }
+
+                    if (!this.Password) this.errors.push("@SharedLocalizer["FillPassword"]");
+                    if (!this.errors.length) return true;
+                    e.preventDefault();
+                    },
+
+                validEmail: function (email) {
+                    var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(email);
+                }
+
+
+            }
+        });
+    </script>
+}

@@ -1,0 +1,171 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/component.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/codemirror.css" />
+    <link rel="stylesheet" href="~/css/StarRating.css" />
+    <!-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
+    <script src="~/js/jquery.tinymce.min.js"></script>
+    <script src="~/js/tinymce.min.js"></script>
+    <script src="~/js/codemirror.js"></script>
+    <script src="~/js/matchbrackets.js"></script>
+    <script src="~/js/continuecomment.js"></script>
+    <script src="~/js/clike.js"></script>
+    <script src="~/js/jquery.tinymce.min.js"></script>
+    <script src="~/js/StarRating.js"></script>
+
+
+    <title>@ViewData["Title"] - WebApp</title>
+
+    <style>
+        a:hover {
+            text-decoration: none;
+        }
+
+        .gn-menu-main {
+            background-color: #0d0804;
+            scrollbar-face-color: #ffffff;
+        }
+
+        .gn-icon-menu::before {
+            background: #ffffff;
+            box-shadow: 0 3px #0d0804, 0 -6px #ffffff, 0 -9px #0d0804, 0 -12px #ffffff;
+        }
+
+        .gn-icon-menu.gn-selected::before {
+            background: #ffffff;
+            box-shadow: 0 3px #0d0804, 0 -6px #ffffff, 0 -9px #0d0804, 0 -12px #ffffff;
+        }
+
+        .gn-menu-main li {
+            border: #0d0804;
+        }
+
+            .gn-menu-main li:focus {
+                background-color: #ffffff;
+            }
+
+        .gn-menu-wrapper {
+            background-color: #0d0804;
+            color: #0d0804;
+        }
+
+        .gn-icon {
+            background-color: #0d0804;
+            color: #ffffff;
+        }
+
+        .gn-menu-main a {
+            color: #ffffff;
+        }
+
+        .gn-trigger a:after {
+            color: #ffffff;
+        }
+        .contacts{
+            font-size:21px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul id="gn-menu" class="gn-menu-main navbar-fixed-top">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+
+
+
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-cog" asp-controller="AdminPanel" asp-action="Users">
+                                        @SharedLocalizer["AdminPanel"]
+                                    </a>
+                                </li>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-article" asp-controller="AddNews" asp-action="News">
+                                        @SharedLocalizer["News"]
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-earth" asp-controller="ExerciseManagement" asp-action="Index">
+                                        @SharedLocalizer["Tasks"]
+                                    </a>
+                                </li>
+                            }
+                            <li>
+                                <a class="gn-icon gn-icon-earth" asp-controller="UserRating" asp-action="Index">
+                                    @SharedLocalizer["Ratings"]
+                                </a>
+                            </li>
+                            <li><a class="gn-icon gn-icon-earth" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <li><a class="gn-icon gn-icon-archive" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+
+                            }
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Teacher"))
+                            {
+                                <li><a class="gn-icon glyphicon glyphicon-envelope contacts" style="padding-top:20px;padding-bottom:20px; padding-left:2px;" asp-controller="EmailMessages" asp-action="Index">@SharedLocalizer["Messages"]</a></li>
+
+                            }
+                            @if (!User.IsInRole("Administrator") && !User.IsInRole("Teacher"))
+                            {
+                                <li>
+                                    <a class="gn-icon glyphicon glyphicon-envelope contacts" 
+                                       style="padding-top:20px;padding-bottom:20px;" asp-controller="EmailMessages" 
+                                       asp-action="GetEmail">@SharedLocalizer["Contacts"]</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </nav>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px">@SharedLocalizer["SoftServe"]</a>
+            </li>
+            @await Html.PartialAsync("_LoginPartial")
+        </ul>
+        <header></header>
+        <br />
+        <br />
+        <div class="container body-content" style="margin-top: 30px">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/js/modernizr.custom.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/classie.js"></script>
+    <script src="~/js/gnmenu.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

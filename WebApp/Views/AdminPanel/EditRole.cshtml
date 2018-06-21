@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model WebApp.ViewModels.ChangeRoleViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<style>
+    .btn-default {
+        width: 65px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <br />
+        <div class="col-lg-6">
+
+            <h3>@SharedLocalizer["ChangeRole"] @Model.UserEmail</h3>
+            <form asp-action="EditRole" method="post" style="float: left;">
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <div class="form-group">
+                    @foreach (IdentityRole role in Model.AllRoles)
+                    {
+
+
+                        <input type="radio" name="roles" value="@role.Name"
+                               @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "") />@role.Name <br />
+                        }
+
+                </div>
+                <button type="submit" style="margin-top:13px;" class="btn btn-default">@SharedLocalizer["Save"]</button>
+            </form>
+
+        </div>
+        <div class="col-lg-6">
+
+
+
+            <div style="clear:both;"></div>
+            <h3>@SharedLocalizer["CurRole"] </h3>
+            @foreach (var role in Model.UserRoles)
+            {
+                <div>@role</div>
+            }
+            
+        </div>
+    </div>
+</div>
+
+

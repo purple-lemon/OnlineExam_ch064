@@ -1,0 +1,174 @@
+﻿@model WebApp.ViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<style>
+
+    .eo-date .eo-date__day {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .eo-date .eo-date__month {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .eo-date {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background: #eee;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        color: #888;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+        -ms-grid-column-align: center;
+        justify-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        margin-top: 4px;
+    }
+
+    .modalDialog {
+        position: fixed;
+        font-family: Arial, Helvetica, sans-serif;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 99999;
+        -webkit-transition: opacity 400ms ease-in;
+        -moz-transition: opacity 400ms ease-in;
+        transition: opacity 400ms ease-in;
+        display: none;
+        pointer-events: none;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+        .modalDialog:target {
+            display: block;
+            pointer-events: auto;
+        }
+
+        .modalDialog > div {
+            width: 600px;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
+
+    .close {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        right: -12px;
+        text-align: center;
+        top: -10px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 1px 1px 3px #000;
+        -webkit-box-shadow: 1px 1px 3px #000;
+        box-shadow: 1px 1px 3px #000;
+    }
+
+        .close:hover {
+            background: #00d9ff;
+        }
+
+    .section:hover {
+        cursor: pointer;
+        color: slategrey;
+    }
+
+    .title:hover {
+        cursor: pointer;
+        color: slategrey;
+    }
+
+    #preview {
+        max-height: 150px;
+        min-height: 150px;
+        max-width: 220px;
+        min-width: 220px;
+    }
+
+    img {
+        background-size: contain;
+        background-size: cover;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+
+            @if (Model.News != null)
+            {
+                <h3>@SharedLocalizer["News"]</h3>
+                @foreach (var i in Model.News)
+                {
+                    <br />
+                    <div class="row">
+                        <div class=" col-lg-offset-1 col-lg-2 eo-date">
+                            <span class="eo-date__day">@i.Day</span>
+                            <span class="eo-date__month">@i.Month</span>
+                        </div>
+                        <div class="col-lg-9">
+                            <a  href='@Url.Action("ShowNews", "AddNews", new { id = i.Id }, null)' class="title">@i.Title</a>
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                }
+                @if (Model.NewsPageViewModel.HasPreviousPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.NewsPageViewModel.PageNumber - 1)"
+                       class="btn btn-default btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                }
+                @if (Model.NewsPageViewModel.HasNextPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.NewsPageViewModel.PageNumber + 1)"
+                       class="btn btn-default btn">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
+                }
+            }
+            else
+            {
+                <h1>@SharedLocalizer["HomePageContent"]</h1>
+            }
+        </div>
+    </div>
+</div>

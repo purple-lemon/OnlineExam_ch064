@@ -1,0 +1,276 @@
+﻿@model WebApp.ViewModels.CodeHistoryViewModels
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+@{
+    ViewData["Title"] = "History";
+}
+
+
+<style>
+    input[type=radio],
+    input[type=checkbox] {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    .titlecode {
+        font-size: 18px;
+        color: #808080;
+    }
+
+        .titlecode:hover {
+            cursor: pointer;
+            color: #0ca501;
+        }
+
+    .code-example {
+        border: 1px solid #cacaca;
+        padding: 12px;
+    }
+
+    .date, .btn, #collapsecontent {
+        color: #808080;
+        font-size: 12px;
+    }
+
+    #output {
+        border: 1px groove #ff6a00;
+    }
+
+    .tabs {
+        width: 125px;
+        height: 30px;
+        border: 1px solid #cecece;
+        border-radius: 5%;
+        text-align: center;
+        padding: 3px;
+        margin-right: 11px;
+        cursor:pointer;
+    }
+
+    .active {
+        box-shadow: 0px 1px 10px #000000;
+    }
+    .display-none{
+        display:none;
+    }
+</style>
+
+<div class="col-lg-3 tabs active history">@SharedLocalizer["History"]</div>
+<div class="col-lg-2 tabs favourites">@SharedLocalizer["Favourites"]</div>
+
+<div></div>
+<hr />
+<br />
+<div class="historyblock">
+    @try
+    {
+        @foreach (var usercode in Model.UserCode)
+        {
+            @foreach (var history in Model.CodeHistory.Where(e => e.UserCodeId == usercode.Id))
+            {
+                <div class="row">
+                    <form>
+                        <div class="col-lg-10">
+                            <p data-id="@history.Id" class="form-control titlecode" readonly>@Model.Exercises.Where(e=>e.Id== usercode.ExerciseId).FirstOrDefault().TaskName</p>
+
+                            <textarea id="code-example" data-id="@history.Id" class="form-control col" rows="15" style="height: 100%; width: 100%; display:none;">@history.CodeText</textarea>
+
+                            <textarea class="form-control col" rows="5" style="height: 100%; width: 100%; " readonly>
+                @if (@history.Result!=null) {@history.Result}
+                else {
+                    @history.Error
+                }</textarea>
+
+                        </div>
+                        <div class="col-lg-1 date">
+                            <div class="row form-group">
+                                <p class="col-lg-12">@history.time</p>
+                                <input id="myBtn" type="button" data-codeTextId="@history.Id" class="save-changes-btn btn btn-default btn-md col-lg-12 display-none" value="@SharedLocalizer["Save"]" />
+
+                            </div>
+                        </div>
+                        <div class="checkbox_wrapper col-lg-1">
+                            <input data-id="@history.Id" data-flag="@history.IsFavouriteCode" id="icon" value="@history.IsFavouriteCode" type="checkbox" />
+                            @if (history.IsFavouriteCode)
+                            {
+                                <label name="qwert" data-id="@history.Id" data-flag="@history.IsFavouriteCode" style="color:red;" for="icon" class="glyphicon glyphicon-heart"></label>
+                            }
+                            else
+                            {
+                                <label name="qwert" data-id="@history.Id" data-flag="@history.IsFavouriteCode" style="color:black;" for="icon" class="glyphicon glyphicon-heart"></label>
+                            }
+                        </div>
+
+                    </form>
+                    <div class="col-lg-1" style="margin-top:24px;">
+                        <form asp-controller="Code" asp-action="Index">
+                            <input type="hidden" name="UserId" value="@Model.UserName" />
+                            <input type="hidden" name="ExerciseId" value="@usercode.ExerciseId" />
+                            <input type="hidden" name="CodeText" id="inputTextareaToSend" value="@history.CodeText" />
+                            <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
+                        </form>
+                    </div>
+                </div><hr />
+            }
+
+        }
+
+    }
+    catch (Exception ex)
+    {
+        <p>@SharedLocalizer["No-Content"]</p>
+    }
+</div>
+<div class="favouritesblock" style="display:none">
+    @try
+    {
+        @foreach (var usercode in Model.UserCode)
+        {
+            @foreach (var history in Model.CodeHistory.Where(e => e.UserCodeId == usercode.Id).Where(e=>e.IsFavouriteCode==true))
+            {
+                <div class="row">
+                    <form>
+                        <div class="col-lg-10">
+                            <p data-id="@history.Id" class="form-control titlecode" readonly>@Model.Exercises.Where(e => e.Id == usercode.ExerciseId).FirstOrDefault().TaskName</p>
+
+                            <textarea id="code-example" data-id="@history.Id" class="form-control col" rows="15" style="height: 100%; width: 100%; display:none;">@history.CodeText</textarea>
+
+                            <textarea class="form-control col" rows="5" style="height: 100%; width: 100%; " readonly>
+                @if (@history.Result!=null) {@history.Result}
+                else {
+                    @history.Error
+                }</textarea>
+
+                        </div>
+                        <div class="col-lg-1 date">
+                            <div class="row form-group">
+                                <p class="col-lg-12">@history.time</p>
+                                <input id="myBtn" type="button" data-codeTextId="@history.Id" class="save-changes-btn btn btn-default btn-md col-lg-12 display-none" value="@SharedLocalizer["Save"]" />
+
+                            </div>
+                        </div>
+                        <div class="checkbox_wrapper col-lg-1">
+                            <input data-id="@history.Id" data-flag="@history.IsFavouriteCode" id="icon" value="@history.IsFavouriteCode" type="checkbox" />
+                            @if (history.IsFavouriteCode)
+                            {
+                                <label name="qwert" data-id="@history.Id" data-flag="@history.IsFavouriteCode" style="color:red;" for="icon" class="glyphicon glyphicon-heart"></label>
+                            }
+                            else
+                            {
+                                <label name="qwert" data-id="@history.Id" data-flag="@history.IsFavouriteCode" style="color:black;" for="icon" class="glyphicon glyphicon-heart"></label>
+                            }
+                        </div>
+
+                    </form>
+                    <div class="col-lg-1" style="margin-top:24px;">
+                        <form asp-controller="Code" asp-action="Index">
+                            <input type="hidden" name="UserId" value="@Model.UserName" />
+                            <input type="hidden" name="ExerciseId" value="@usercode.ExerciseId" />
+                            <input type="hidden" name="CodeText" id="inputTextareaToSend" value="@history.CodeText" />
+                            <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
+                        </form>
+                    </div>
+                </div><hr />
+            }
+
+        }
+
+    }
+    catch (Exception ex)
+    {
+        <p>@SharedLocalizer["No-Content"]</p>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/js/matchbrackets.js"></script>
+    <script src="~/js/continuecomment.js"></script>
+    <script src="~/js/clike.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="~/js/tinymce.min.js"></script>
+
+
+    <script>
+        $('.history').click(function () {
+            $('.historyblock').slideDown();
+            $('.favouritesblock').slideUp();
+            $('.favourites').removeClass("active");
+            $('.history').addClass("active");
+        });
+        $('.favourites').click(function () {
+            $('.historyblock').slideUp();
+            $('.favouritesblock').slideDown();
+            $('.history').removeClass("active");
+            $('.favourites').addClass("active");
+        });
+        $(document).on('focusin', '#code-example', function () { 
+                var $this = $(this),
+                    parent = $this.parents('form'),
+                    showHideEl = parent.find('#myBtn');
+                showHideEl.show();
+        });
+        
+
+        $(document).ready(function () {
+            $(document).on('click', '#myBtn',function () {
+                var obj = new Object();
+                var codeTextId = $.parseJSON($(this).attr('data-codeTextId'));
+                var $this = $(this),
+                    parent = $this.parents('form'),
+                    showHideEl = parent.find('#code-example');
+                var codeText = showHideEl.val();
+                obj.codeTextId = codeTextId;
+                obj.codeText = codeText;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/CodeHistory/EditCode",
+                    data: obj,
+                    success: function (data) {
+                        location.reload();
+                    }
+
+                });
+            });
+        });
+
+        $(document).on('click', '.titlecode', function () {
+            var $this = $(this),
+                parent = $this.parents('form'),
+                showHideEl = parent.find('#code-example');
+            showHideEl.slideToggle();
+
+        });
+
+        $(document).on('click', '.glyphicon', function (e) {
+            var obj = new Object();
+            var $this = $(this),
+                parent = $this.parents('form'),
+                showHideEl = parent.find('.glyphicon');
+
+            codeId = showHideEl.data('id');
+            flag = showHideEl.data('flag');
+
+            obj.codeId = codeId;
+            obj.flag = flag;
+
+            $.ajax({
+                type: "POST",
+                url: "/CodeHistory/SetFav",
+                data: obj,
+                success: function (data) {
+                    console.log(data.flag);
+                    if (data.flag === true)
+                        $this.css('color', 'red');
+                    else
+                        $this.css('color', 'black');
+                    location.reload();
+                }
+            });
+        });
+
+    </script>
+}
