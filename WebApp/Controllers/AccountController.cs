@@ -78,15 +78,16 @@ namespace WebApp.Controllers
                     await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+					var user = await userManager.FindByEmailAsync(model.Email);
+					Claim claim = new Claim("Some Claim", "Claim");
+					var v = await userManager.GetUsersForClaimAsync(claim);
+					if (v.ToList().All(c => c.Email != user.Email))
+					{
+						await userManager.AddClaimAsync(user, claim);
+					}
+
+					if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl) && !model.ReturnUrl.Contains("Login", StringComparison.OrdinalIgnoreCase))
                     {
-                        var user = await userManager.FindByEmailAsync(model.Email);
-                        Claim claim = new Claim("Some Claim", "Claim");
-                        var v = await userManager.GetUsersForClaimAsync(claim);
-                        if (v.ToList().All(c => c.Email != user.Email))
-                        {
-                            await userManager.AddClaimAsync(user, claim);
-                        }
                         return Redirect(model.ReturnUrl);
                     }
                     else
