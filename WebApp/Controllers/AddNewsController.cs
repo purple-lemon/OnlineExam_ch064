@@ -14,8 +14,8 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class AddNewsController : Controller
-    {
+    public class AddNewsController : BaseWebController
+	{
         IHostingEnvironment appEnvironment;
         private readonly ICourseManager courseManager;
         private readonly INewsManager newsManager;

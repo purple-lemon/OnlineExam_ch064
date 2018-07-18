@@ -34,7 +34,7 @@ namespace WebApp.ApiControllers
 		public IActionResult Index()
 		{
 			var coursesList = courseManager.GetAll();
-			return View(coursesList);
+			return Ok();
 		}
 
 		[HttpPost]
@@ -50,7 +50,14 @@ namespace WebApp.ApiControllers
 			{
 				courseManager.Insert(model);
 			}
-			return RedirectToAction("Index", "CourseManagement");
+			return Ok();
+		}
+
+		[HttpPost]
+		public IActionResult Delete(int id)
+		{
+			courseManager.Delete(new CourseDTO() { Id = id });
+			return Ok();
 		}
 
 

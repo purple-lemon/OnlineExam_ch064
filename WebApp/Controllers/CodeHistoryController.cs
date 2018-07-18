@@ -15,8 +15,8 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class CodeHistoryController : Controller
-    {
+    public class CodeHistoryController : BaseWebController
+	{
         private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;

@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 
 namespace WebApp.Controllers
 {
-    public class AccountController : Controller
-    {
+	public class AccountController : BaseWebController
+	{
 
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;

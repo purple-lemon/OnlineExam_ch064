@@ -63,7 +63,7 @@ namespace BAL.Managers
 
         public void Delete(CourseDTO entityToDelete)
         {
-            unitOfWork.CourseRepo.Delete(mapper.Map<Course>(entityToDelete));
+            unitOfWork.CourseRepo.Delete(new Course() { Id = entityToDelete.Id });
             unitOfWork.Save();
         }
     }

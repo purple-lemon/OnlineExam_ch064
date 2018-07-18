@@ -18,6 +18,9 @@ using BAL.Interfaces;
 using BAL.Managers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using NSwag.AspNetCore;
+using System.Reflection;
+using NJsonSchema;
 
 namespace WebApp
 {
@@ -161,8 +164,13 @@ namespace WebApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-
-            app.UseAuthentication();
+			app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, settings =>
+			{
+				settings.GeneratorSettings.DefaultPropertyNameHandling = PropertyNameHandling.CamelCase;
+				settings.GeneratorSettings.DefaultEnumHandling = EnumHandling.String;
+				settings.GeneratorSettings.Title = "Platform Services";
+			});
+			app.UseAuthentication();
 
             dbInitializer.Initialize();
 
@@ -172,7 +180,9 @@ namespace WebApp
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
+
+			
+		}
     }
 
 

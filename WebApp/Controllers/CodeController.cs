@@ -13,8 +13,8 @@ using Microsoft.Extensions.Configuration;
 namespace WebApp.Controllers
 {
     [Authorize]
-    public class CodeController : Controller
-    {
+    public class CodeController : BaseWebController
+	{
         private CodeManager codeManager;
         private IExerciseManager exerciseManager;
         private UserManager<User> userManager;

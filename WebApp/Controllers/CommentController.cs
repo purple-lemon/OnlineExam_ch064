@@ -22,8 +22,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebApp.Controllers
 {
-    public class CommentController : Controller
-    {
+    public class CommentController : BaseWebController
+	{
         private readonly ICommentManager commentManager;
         private readonly IExerciseManager exerciseManager;
         private readonly IConfiguration configuration;

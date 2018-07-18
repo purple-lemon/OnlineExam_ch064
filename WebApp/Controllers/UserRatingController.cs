@@ -19,8 +19,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Controllers
 {
-    public class UserRatingController : Controller
-    {
+    public class UserRatingController : BaseWebController
+	{
        
         private readonly IUserRatingManager userRatingManager;
         private readonly IMapper mapper;

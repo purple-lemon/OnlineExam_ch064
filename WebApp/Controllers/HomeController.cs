@@ -19,8 +19,8 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class HomeController : Controller
-    {
+    public class HomeController : BaseWebController
+	{
         private readonly INewsManager newsManager;
         public HomeController(INewsManager newsManager)
         {

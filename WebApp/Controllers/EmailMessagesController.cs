@@ -14,8 +14,8 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class EmailMessagesController : Controller
-    {
+    public class EmailMessagesController : BaseWebController
+	{
         private readonly IMessagesManager messagesManager;
         private readonly IMapper mapper;
 

@@ -19,8 +19,8 @@ using Model.Entity;
 namespace WebApp.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    public class AdminPanelController : Controller
-    {
+    public class AdminPanelController : BaseWebController
+	{
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IExerciseManager exerciseManager;

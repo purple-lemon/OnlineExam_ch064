@@ -23,8 +23,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebApp.Controllers
 {
-    public class ExerciseManagementController : Controller
-    {
+    public class ExerciseManagementController : BaseWebController
+	{
         private readonly IExerciseManager exerciseManager;
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;

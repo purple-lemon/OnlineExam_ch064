@@ -17,7 +17,7 @@ using AutoMapper;
 using RestSharp;
 using System.Reflection;
 using Newtonsoft.Json;
-
+using NSwag.Annotations;
 
 namespace WebApp.ApiControllers
 {
@@ -44,35 +44,37 @@ namespace WebApp.ApiControllers
         }
         // GET: api/CommentAPI
         [HttpGet("{id}")]
-        public List<CommentDTO> Get(int id)
+		[SwaggerResponse(typeof(IEnumerable<CommentDTO>))]
+        public IActionResult Get(int id)
         {
 
             var json = commentManager.Get(c => c.ExerciseId == id).ToList();
-            return json;
+            return Ok(json);
         }
        
         // POST: api/CommentAPI
         [HttpPost]
-        public void Post(CommentDTO comment)
+        public IActionResult Post(CommentDTO comment)
         {
             comment.CreationDateTime = DateTime.Now;
             commentManager.Insert(comment);
-            if (comment.Rating != null)
-            {
-                var commentlist = commentManager.Get(g => g.ExerciseId == comment.ExerciseId && g.Rating != 0).ToList();
-                double average = 0;
-                foreach (var elem in commentlist)
-                {
-                    if (elem.Rating != 0)
-                        average += Convert.ToDouble(elem.Rating);
-                }
+			if (comment.Rating != null)
+			{
+				var commentlist = commentManager.Get(g => g.ExerciseId == comment.ExerciseId && g.Rating != 0).ToList();
+				double average = 0;
+				foreach (var elem in commentlist)
+				{
+					if (elem.Rating != 0)
+						average += Convert.ToDouble(elem.Rating);
+				}
 
-                average = average / commentlist.Count;
-                if(average>=0)
-                exerciseManager.UpdateRating(comment.ExerciseId, average);
+				average = average / commentlist.Count;
+				if (average >= 0)
+					exerciseManager.UpdateRating(comment.ExerciseId, average);
 
-            }
-        }
+			}
+			return Ok();
+		}
 
 
 

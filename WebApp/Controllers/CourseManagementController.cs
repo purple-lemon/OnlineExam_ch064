@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
-    public class CourseManagementController : Controller
-    {
+    public class CourseManagementController : BaseWebController
+	{
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;

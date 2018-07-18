@@ -18,8 +18,8 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers
 {   
     [Authorize]
-    public class UserController : Controller
-    {
+    public class UserController : BaseWebController
+	{
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
