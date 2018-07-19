@@ -42,13 +42,23 @@ namespace WebApp.ApiControllers
             this.mapper = mapper;
             this.codeManager = codeManager;
         }
-        // GET: api/CommentAPI
-        [HttpGet("{id}")]
+
+		[HttpGet]
 		[SwaggerResponse(typeof(IEnumerable<CommentDTO>))]
-        public IActionResult Get(int id)
+		public IActionResult GetAll(int id)
+		{
+
+			var json = commentManager.GetAll();
+			return Ok(json);
+		}
+
+		// GET: api/CommentAPI
+		[HttpGet("{id}")]
+		[SwaggerResponse(typeof(IEnumerable<CommentDTO>))]
+        public IActionResult Get(int excerciseId)
         {
 
-            var json = commentManager.Get(c => c.ExerciseId == id).ToList();
+            var json = commentManager.Get(c => c.ExerciseId == excerciseId).ToList();
             return Ok(json);
         }
        

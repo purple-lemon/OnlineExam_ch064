@@ -50,7 +50,7 @@ namespace WebApp.ApiControllers
 			{
 				courseManager.Insert(model);
 			}
-			return Ok();
+			return Ok(model);
 		}
 
 		[HttpPost]
