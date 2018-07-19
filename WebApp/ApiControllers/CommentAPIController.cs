@@ -53,7 +53,8 @@ namespace WebApp.ApiControllers
 		}
 
 		// GET: api/CommentAPI
-		[HttpGet("{id}")]
+		[HttpGet]
+		[Route("excercise/{id}")]
 		[SwaggerResponse(typeof(IEnumerable<CommentDTO>))]
         public IActionResult Get(int excerciseId)
         {

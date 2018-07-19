@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers
 			return Ok(model);
 		}
 
-		[HttpPost]
+		[Route("delete")]
 		public IActionResult Delete(int id)
 		{
 			courseManager.Delete(new CourseDTO() { Id = id });

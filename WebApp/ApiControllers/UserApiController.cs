@@ -11,7 +11,7 @@ using WebApp.ViewModels;
 namespace WebApp.ApiControllers
 {
 	[Produces("application/json")]
-	[Route("api/CodeAPI")]
+	[Route("api/users")]
 	public class UserApiController  :Controller
     {
 		private readonly UserManager<User> userManager;
@@ -24,6 +24,7 @@ namespace WebApp.ApiControllers
 		}
 
 		[HttpPost]
+		[Route("change/password/")]
 		public IActionResult ChangePassword(ChangePasswordViewModel model)
 		{
 			if (!ModelState.IsValid)
@@ -52,6 +53,7 @@ namespace WebApp.ApiControllers
 		}
 
 		[HttpPost]
+		[Route("change/name/")]
 		public IActionResult ChangeUserName(ChangeUserNameViewModel model)
 		{
 			if (!ModelState.IsValid)
@@ -80,6 +82,7 @@ namespace WebApp.ApiControllers
 		}
 
 		[HttpPost]
+		[Route("change/email/")]
 		public IActionResult ChangeEmail(ChangeEmailViewModel model)
 		{
 			User user = userManager.FindByIdAsync(model.Id).Result;
